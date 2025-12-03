@@ -34,9 +34,9 @@ export default function ImagePreview({ userImage, scale, offsetX, offsetY, bgIma
       ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height)
 
       // Draw circular mask with user image
-      const maskRadius = 320
+      const maskRadius = 380
       const centerX = canvas.width / 2
-      const centerY = canvas.height / 2 - 170
+      const centerY = canvas.height / 2 - 115
 
       const userImg = new Image()
       userImg.crossOrigin = "anonymous"
@@ -61,12 +61,30 @@ export default function ImagePreview({ userImage, scale, offsetX, offsetY, bgIma
 
         ctx.restore()
 
-        // Draw border circle
-        // ctx.strokeStyle = "rgba(255, 255, 255, 0.5)"
-        // ctx.lineWidth = 3
-        // ctx.beginPath()
-        // ctx.arc(centerX, centerY, maskRadius, 0, Math.PI * 2)
-        // ctx.stroke()
+        // Create soft edge by drawing a radial gradient overlay
+        ctx.save()
+        ctx.globalCompositeOperation = "destination-in"
+        
+        const featherWidth = 20 // Adjust this for more/less blur
+        const gradient = ctx.createRadialGradient(
+          centerX, centerY, maskRadius - featherWidth,
+          centerX, centerY, maskRadius
+        )
+        gradient.addColorStop(0, "rgba(0, 0, 0, 1)")
+        gradient.addColorStop(1, "rgba(0, 0, 0, 0)")
+        
+        ctx.fillStyle = gradient
+        ctx.beginPath()
+        ctx.arc(centerX, centerY, maskRadius, 0, Math.PI * 2)
+        ctx.fill()
+        
+        ctx.restore()
+
+        // Redraw background on top (outside the circle area)
+        ctx.save()
+        ctx.globalCompositeOperation = "destination-over"
+        ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height)
+        ctx.restore()
       }
     }
   }, [userImage, scale, offsetX, offsetY, bgImageUrl, canvasRef])
