@@ -10,6 +10,7 @@ import { Download, Upload, ImageIcon, Check, Github } from "lucide-react"
 import Image from "next/image"
 
 const BG_IMAGE_URL = "/images/bg.png"
+const OVERLAY_IMAGE_URL = "/images/top.png"
 
 const PREDEFINED_PHOTOS = [
   { id: "avatar1", src: "/images/avatars/avatar1.png", label: "Avatar 1" },
@@ -90,6 +91,15 @@ export default function PhotoEditor() {
             NSU Quran Conference & Seerah Exhibition 2025
           </h1>
           <p className="text-xl text-slate-600">Profile Photo Generator</p>
+          <p>
+            Powered by{" "}
+            <a
+              href="https://chatpoka.com"
+              className="font-bold bg-gradient-to-r from-emerald-500 via-sky-500 to-emerald-500 bg-[length:200%_auto] animate-gradient-x bg-clip-text text-transparent hover:underline"
+            >
+              chatpoka.com
+            </a>
+          </p>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -162,7 +172,7 @@ export default function PhotoEditor() {
               />
             </section>
 
-            
+
           </div>
 
           {/* Right Column - Preview & Download */}
@@ -179,6 +189,7 @@ export default function PhotoEditor() {
                   offsetX={offsetX}
                   offsetY={offsetY}
                   bgImageUrl={BG_IMAGE_URL}
+                  overlayImageUrl={OVERLAY_IMAGE_URL}
                   canvasRef={canvasRef}
                 />
               ) : (
@@ -225,7 +236,7 @@ export default function PhotoEditor() {
         {/* Footer */}
         <footer className="mt-12 text-center text-slate-500 text-sm">
           <p>Made with ❤️ by <a href="https://github.com/Aaban-Saad" className="underline">Aaban Saad</a></p>
-          <p>Visit: <a href="https://chatpoka.com" className="underline">chatpoka.com</a></p>
+          <p className="mt-2">Powered by <a href="https://chatpoka.com" className="underline">chatpoka.com</a></p>
           <p className="mt-2">Contribute: <a href="https://github.com/Aaban-Saad/nsu-quran-conference-profile-pic-generator" className="underline">GitHub</a></p>
         </footer>
       </div>
